@@ -1,0 +1,29 @@
+/* avoid.c */
+
+void random_avoid()
+{
+	backward();
+	sleep(.4);
+	set_beep_pitch(1000.);
+	beeper_on();
+	if (random(2) == 0) left();
+	else right();
+	sleep((float)random(100)/100. + .5);
+	beeper_off();
+}
+
+void left_avoid()
+{
+	backward();
+	sleep(.4);
+	right();
+	sleep(.4);
+}
+
+void right_avoid()
+{
+	backward();
+	sleep(.4);
+	left();
+	sleep(.4);
+}

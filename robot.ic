@@ -1,0 +1,15 @@
+void main()
+{
+	while (1)
+	{
+		printf("Going forward...\n");
+		fd(0);
+		if (digital(15))
+		{
+			printf("Backing up!\n");
+			bk(0);
+			beep();
+			sleep(2.0);
+		}
+	}
+}

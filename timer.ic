@@ -1,0 +1,13 @@
+/* timer.c */
+
+float_timer;
+
+void reset_timer()
+{
+	_timer = seconds();
+}
+
+float timer()
+{
+	return seconds() - _timer;
+}

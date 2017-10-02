@@ -1,0 +1,149 @@
+/* metasens.c
+requires turtle.c, timer.c, and avoid.c */
+
+int LEFT_MOTOR = 0;
+int RIGHT_MOTOR = 3;
+float t = .4;
+float tt = .1;
+void forward()
+{
+    fd(LEFT_MOTOR);
+    off(LEFT_MOTOR);
+    sleep(.01);
+    fd(LEFT_MOTOR);
+    fd(RIGHT_MOTOR);
+}
+
+void backward()
+{
+    bk(LEFT_MOTOR);
+    bk(RIGHT_MOTOR);
+}
+
+void right()
+{
+    fd(LEFT_MOTOR);
+    bk(RIGHT_MOTOR);
+}
+
+void left()
+{
+    bk(LEFT_MOTOR);
+    fd(RIGHT_MOTOR);
+}
+
+void stop()
+{
+    off(LEFT_MOTOR);
+    off(RIGHT_MOTOR);
+}
+
+float _timer;
+
+void reset_timer()
+{
+    _timer = seconds();
+}
+
+float timer()
+{
+    return seconds() - _timer;
+}
+
+
+void random_avoid()
+{
+    backward();
+    sleep(t);
+    set_beeper_pitch(1000.);
+    beeper_on();
+    if (random(2) == 0) left();
+    else right();
+    sleep(.4);
+    beeper_off();
+}
+
+void left_avoid()
+{
+    backward();
+    sleep(t);
+    right();
+    sleep(.3);
+}
+
+void right_avoid()
+{
+    backward();
+    sleep(t);
+    left();
+    sleep(tt);
+}
+
+
+int LEFT_TOUCH = 10;
+int RIGHT_TOUCH = 11;
+
+void main() 
+{
+    int recent_bumps = 0;
+    reset_timer();
+    
+    while(1) 
+      {
+        forward();
+        if(digital(LEFT_TOUCH)) 
+          {
+            if (timer() < 1.5) //changed 2 to 1
+              {
+                if (recent_bumps == 3) 
+                  {
+                    random_avoid();
+                    reset_timer();
+                    recent_bumps = 0;
+                } 
+                else 
+                  {
+                    left_avoid();
+                    reset_timer();
+                    recent_bumps++;
+                } 
+            }
+            else 
+              {
+                left_avoid();
+                reset_timer();
+                recent_bumps = 1;
+            }
+        } 
+        if (digital(RIGHT_TOUCH)) 
+          {
+            if (timer() < 1.)//changed 2 to 1
+              {
+                if(recent_bumps == 3) 
+                  {
+                    random_avoid();
+                    reset_timer();
+                    recent_bumps = 0;
+                } else 
+                  {
+                    right_avoid();
+                    reset_timer();
+                    recent_bumps++;
+                }
+            } 
+            else 
+              {
+                right_avoid();
+                reset_timer();
+                recent_bumps = 1;
+            }
+            
+            if (digital (RIGHT_TOUCH) && digital (LEFT_TOUCH))
+              {
+                random_avoid();
+                reset_timer();
+                recent_bumps = 0;
+            }
+        }
+    }
+}

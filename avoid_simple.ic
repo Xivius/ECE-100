@@ -1,0 +1,25 @@
+void main () 
+{
+    while (1)
+      {
+        fd(0);
+        fd(3);
+        if (digital (10))
+          {
+            bk(0);
+            bk(3);
+            sleep(0.5);
+            fd(0);
+            sleep(0.5);
+        }
+        if (digital (15))
+          {
+            bk(0);   
+            bk(3);
+            sleep(0.5);
+            fd(3);
+            sleep(0.5);
+        }
+         
+    }
+}

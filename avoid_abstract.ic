@@ -1,0 +1,22 @@
+void main () 
+{
+    while (1)
+    {
+        forward();
+        if (digital (10))
+        {
+            backward();
+            sleep(0.5);
+            right();
+            sleep(0.5);
+        }
+        if (digital (15))
+        {
+            backward();
+            sleep(0.5);
+            left();
+            sleep(0.5);
+        }
+    }
+	stop();
+}

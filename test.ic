@@ -1,0 +1,9 @@
+void test()
+{
+	fd(0);
+	sleep(1.0);
+	bk(0);
+	sleep(1.0);
+	off(0);
+	beep();
+}
